@@ -4,9 +4,9 @@
 
 <img src="https://www.freepnglogos.com/uploads/html5-logo-png/html5-logo-devextreme-multi-purpose-controls-html-javascript-3.png" title="Frontend" style="width:50%; height:auto" alt="HTML CSS JS logos">
 
-<img src="https://openjsf.org/wp-content/uploads/sites/84/2019/10/jquery-logo-vertical_large_square.png" title="jQuery" style="width:30%; height:auto" alt="jQuery logos">
-
 <img src="https://miro.medium.com/max/824/1*9RqBEDU9Mbg6XM8O6d7Q9A.png" title="Bootstrap" style="width:40%; height:auto" alt="Bootstrap logo">
+
+<img src="https://www.profitbooks.net/wp-content/uploads/2020/01/razorpay-logo.png" title="Razorpay" style="width:40%; height:auto" alt="Razorpay">
 
 # SuperPizza : A Pizza Delivery Website
 
