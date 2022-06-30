@@ -20,12 +20,23 @@ It is project containing website related Pizza Delivery Services using technolog
 
 # Features
 
-* Shopping Cart: We can add pizza with quantity in shopping cart.
-* Checkout: Customer will give their address and phone number for delivery purposes.
-* Discount: We can add discount code which will subtract the discount percentage amount from total price of the order.
-* Payment Integration: I have used Razorpay for this project.
-* Staff Panel: In staff panel, we can add pizza information, handle orders, handle reviews(if there is any inappropriate content), handle contact or messages.
-* Order Tracking: Customer can track their orders using order ID.
+## Shopping Cart
+We can add pizza with quantity in shopping cart.
+
+## Checkout
+Customer will give their address and phone number for delivery purposes.
+
+## Discount
+We can add discount code which will subtract the discount percentage amount from total price of the order.
+
+## Payment Integration
+I have used Razorpay for this project.
+
+## Staff Panel
+In staff panel, we can add pizza information, handle orders, handle reviews(if there is any inappropriate content), handle contact or messages.
+
+## Order Tracking
+Customer can track their orders using order ID.
 
 
 # Clone
@@ -33,6 +44,8 @@ It is project containing website related Pizza Delivery Services using technolog
 ***Clone this repo to your local machine using*** **https://github.com/suyashphatak23/Pizza-Delivery-Website**
 
 # Setup
+
+Refer the link: https://realpython.com/django-setup/
 
 1. > Open **Command Prompt**
 
@@ -46,7 +59,6 @@ It is project containing website related Pizza Delivery Services using technolog
 ```
 
 3. > Run the code in command prompt using **python manage.py runserver**
-
 
 # License
 
