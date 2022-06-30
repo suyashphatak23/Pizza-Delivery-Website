@@ -203,13 +203,24 @@ def discount(request):
         code_check = models.Discount_Check.objects.filter(username=user.username)
         code_applied = []
 
+        if len(code_check) == 0:
+            code_status = models.Discount_Check(username=user.username, code=code, is_applied=True)
+            for order in orders:
+                discount_amount = (order.total_price * code_object.discount) / 100
+                order.total_price = order.total_price - discount_amount
+                order.save()
+            code_status.save()
+            messages.success(request, 'Code Applied Successfully')
+            return redirect('checkout')
+
+
         for code_user in code_check:
             if code_user.username == user.username:
                 code_applied.append(code_user.code)
 
         for code_exist in range(len(code_applied)):
             if code_applied[code_exist] == code:
-                messages.error(request,  'Code Already Applied')
+                messages.error(request, 'Code Already Applied')
                 return redirect('checkout')
 
             else:
@@ -220,8 +231,8 @@ def discount(request):
                     order.save()
                 code_status.save()
                 messages.success(request, 'Code Applied Successfully')
-            return redirect('checkout')
-
+                return redirect('checkout')
+        return redirect('checkout')
     except Exception as e:
         print(e)
         messages.error(request, "Code does not exist")
