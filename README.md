@@ -10,6 +10,7 @@
 
 # SuperPizza : A Pizza Delivery Website
 
+It is project containing website related Pizza Delivery Services using technologies like Django, HTML, CSS, JS, Bootstrap.
 
 [![Build Status](http://img.shields.io/travis/badges/badgerbadgerbadger.svg?style=flat-square)](https://travis-ci.org/badges/badgerbadgerbadger)
 [![Coverage Status](http://img.shields.io/coveralls/badges/badgerbadgerbadger.svg?style=flat-square)](https://coveralls.io/r/badges/badgerbadgerbadger)
@@ -18,6 +19,13 @@
 [YouTube Link](https://youtu.be/DDWRbbFdAgQ)
 
 # Features
+
+* Shopping Cart: We can add pizza with quantity in shopping cart.
+* Checkout: Customer will give their address and phone number for delivery purposes.
+* Discount: We can add discount code which will subtract the discount percentage amount from total price of the order.
+* Payment Integration: I have used Razorpay for this project.
+* Staff Panel: In staff panel, we can add pizza information, handle orders, handle reviews(if there is any inappropriate content), handle contact or messages.
+* Order Tracking: Customer can track their orders using order ID.
 
 
 # Clone
