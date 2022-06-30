@@ -46,11 +46,14 @@ def authenticateStaff(request):
     password = request.POST['password']
 
     user = authenticate(username=username, password=password)
-
     if user is not None:
         if user.groups.filter(name="Staff").exists():
             login(request, user)
             return redirect('staffHomepage')
+        
+        else:
+            messages.add_message(request, messages.ERROR, "User Not Permitted")
+            return redirect('staffLogin')
 
     else:
         messages.add_message(request, messages.ERROR, "Invalid Credentials")
