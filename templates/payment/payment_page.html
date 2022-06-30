@@ -84,16 +84,22 @@
 
 <script>
 var options = {
-
-  key: "{{ razorpay_merchant_key }}",
-
-  amount: "{{ razorpay_amount }}",
-  currency: "{{ currency }}",
-
-  name: "PizzaStop",
-
-  order_id: "{{ razorpay_order_id }}",
-  callback_url: "{{ callback_url }}",
+    "key": "{{ razorpay_merchant_key }}", // Enter the Key ID generated from the Dashboard
+    "amount": "{{ razorpay_amount }}", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "PizzaStop",
+    "description": "Test Transaction",
+    "image": "https://cdn.dribbble.com/users/2549306/screenshots/16008572/media/5e25bfa523802dc70247014920d4d530.png?compress=1&resize=400x300&vertical=top",
+    "order_id": "{{ razorpay_order_id }}",
+    "callback_url": "{{ callback_url }}",
+    "prefill": {
+        "name": "Gaurav Kumar",
+        "email": "gaurav.kumar@example.com",
+        "contact": "9999999999"
+    },
+    "notes": {
+        "address": "PizzaStop Corporate Office"
+    },
 };
 
 var rzp1 = new Razorpay(options);

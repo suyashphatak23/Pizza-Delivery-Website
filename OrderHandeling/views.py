@@ -159,15 +159,15 @@ def checkout(request):
                                              state=state, zip_code=zip_code, phone=phone, total_amount=total_amount)
             checkout_order.save()
 
-            razorpay_order = razorpay_client.order.create(
-                dict(amount=(checkout_order.total_amount * 100), currency='INR', payment_capture='0'))
+            razorpay_client =  client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
+            razorpay_order = razorpay_client.order.create(data=
+                dict(amount=(checkout_order.total_amount * 100), currency='INR', receipt= "order_rcptid_11"))
             razorpay_order_id = razorpay_order['id']
             callback_url = 'handlerequest/'
             contextlib = {
                 'razorpay_order_id': razorpay_order_id,
                 'razorpay_merchant_key': settings.RAZOR_KEY_ID,
                 'razorpay_amount': checkout_order.total_amount,
-                'currency': 'INR',
                 'callback_url': callback_url,
                 'total_amount': total_amount,
                 'orders': orders,
@@ -229,9 +229,6 @@ def discount(request):
 # *******************************************************************************
 
 # *********************** Payment Integration *****************************
-razorpay_client = razorpay.Client(auth=(settings.RAZOR_KEY_ID, settings.RAZOR_KEY_SECRET))
-
-
 @csrf_exempt
 def handlerequest(request):
     unpaid_orders = models.Cart.objects.filter(user=request.user, is_paid=False)
@@ -241,51 +238,31 @@ def handlerequest(request):
 
     if request.method == "POST":
         try:
-            payment_id = request.POST.get('razorpay_payment_id', '')
-            razorpay_order_id = request.POST.get('razorpay_order_id', '')
-            signature = request.POST.get('razorpay_signature')
-            params_dict = {
-                'razorpay_order_id': razorpay_order_id,
-                'razorpay_payment_id': payment_id,
-                'razorpay_signature': signature
-            }
+            now = datetime.datetime.now()
 
-            result = razorpay_client.utility.verify_payment_signature(params_dict)
-            if result is None:
-                amount = total_amount * 100
-                try:
-                    razorpay_client.payment.capture(payment_id, amount)
-                    now = datetime.datetime.now()
+            dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
 
-                    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+            for order in unpaid_orders:
+                order.is_paid = True
+                order.order_status = "order_taken"
+                order.save()
 
-                    for order in unpaid_orders:
-                        order.is_paid = True
-                        order.order_status = "order_taken"
-                        order.save()
+            paid_orders = models.Cart.objects.filter(is_paid=True)
+            pizzas = [x.pizza for x in paid_orders]
+            admin_order = AdminOrder()
+            admin_order.user = request.user
+            admin_order.order_id = paid_orders[0].order_id
+            admin_order.status = "order_taken"
+            admin_order.timestamp = dt_string
+            admin_order.total_amount = total_amount
+            admin_order.save()
+            for pizza in pizzas:
+                admin_order.pizza.add(pizza)
 
-                    paid_orders = models.Cart.objects.filter(is_paid=True)
-                    pizzas = [x.pizza for x in paid_orders]
-                    admin_order = AdminOrder()
-                    admin_order.user = request.user
-                    admin_order.order_id = paid_orders[0].order_id
-                    admin_order.status = "order_taken"
-                    admin_order.timestamp = dt_string
-                    admin_order.total_amount = total_amount
-                    admin_order.save()
-                    for pizza in pizzas:
-                        admin_order.pizza.add(pizza)
-
-                    return redirect('review')
-
-                except Exception as e:
-                    return HttpResponse(e)
-
-            else:
-                return render(request, 'payment/order_failure.html')
+            return redirect('review')
 
         except:
-            return HttpResponseBadRequest()
+            return render(request, 'payment/order_failure.html')
 
     else:
         return HttpResponseBadRequest()
