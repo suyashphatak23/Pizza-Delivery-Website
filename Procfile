@@ -1,0 +1,1 @@
+web: gunicorn DeliveryApp.wsgi
