@@ -11,7 +11,7 @@ SECRET_KEY = 'fm(-6z7g*)mv40)2dk!vg7$ap6x4-(14i+pn-hh^x4m671)06o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','superpizza-django.herokuapp.com']
 
 
 # Application definition
